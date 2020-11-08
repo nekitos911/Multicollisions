@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoraHash", "MoraHash\MoraHash.csproj", "{F556CB43-3D69-4B0D-9728-7CEF27F6AABB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm", "Algorithm\Algorithm.csproj", "{58E8D1F7-9662-4BE0-8487-B78F8177CEC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoraHash.Tests", "MoraHash.Tests\MoraHash.Tests.csproj", "{1B48366A-328B-49CA-86D4-C01BBD609468}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F556CB43-3D69-4B0D-9728-7CEF27F6AABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F556CB43-3D69-4B0D-9728-7CEF27F6AABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F556CB43-3D69-4B0D-9728-7CEF27F6AABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F556CB43-3D69-4B0D-9728-7CEF27F6AABB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58E8D1F7-9662-4BE0-8487-B78F8177CEC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58E8D1F7-9662-4BE0-8487-B78F8177CEC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58E8D1F7-9662-4BE0-8487-B78F8177CEC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58E8D1F7-9662-4BE0-8487-B78F8177CEC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B48366A-328B-49CA-86D4-C01BBD609468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B48366A-328B-49CA-86D4-C01BBD609468}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B48366A-328B-49CA-86D4-C01BBD609468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B48366A-328B-49CA-86D4-C01BBD609468}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
