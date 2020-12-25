@@ -1,28 +1,44 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoraHash", "MoraHash\MoraHash.csproj", "{F556CB43-3D69-4B0D-9728-7CEF27F6AABB}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoraHash", "MoraHash\MoraHash.csproj", "{8A69AA3F-5FEA-451B-9EFE-528B68BC478C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm", "Algorithm\Algorithm.csproj", "{58E8D1F7-9662-4BE0-8487-B78F8177CEC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm", "Algorithm\Algorithm.csproj", "{98508736-247B-41BB-9221-70C900431B19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoraHash.Tests", "MoraHash.Tests\MoraHash.Tests.csproj", "{1B48366A-328B-49CA-86D4-C01BBD609468}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoraHash.Tests", "MoraHash.Tests\MoraHash.Tests.csproj", "{1B48366A-328B-49CA-86D4-C01BBD609468}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F556CB43-3D69-4B0D-9728-7CEF27F6AABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F556CB43-3D69-4B0D-9728-7CEF27F6AABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F556CB43-3D69-4B0D-9728-7CEF27F6AABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F556CB43-3D69-4B0D-9728-7CEF27F6AABB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58E8D1F7-9662-4BE0-8487-B78F8177CEC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58E8D1F7-9662-4BE0-8487-B78F8177CEC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58E8D1F7-9662-4BE0-8487-B78F8177CEC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58E8D1F7-9662-4BE0-8487-B78F8177CEC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A69AA3F-5FEA-451B-9EFE-528B68BC478C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A69AA3F-5FEA-451B-9EFE-528B68BC478C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A69AA3F-5FEA-451B-9EFE-528B68BC478C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A69AA3F-5FEA-451B-9EFE-528B68BC478C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A69AA3F-5FEA-451B-9EFE-528B68BC478C}.Debug|x64.ActiveCfg = Debug|x64
+		{8A69AA3F-5FEA-451B-9EFE-528B68BC478C}.Debug|x64.Build.0 = Debug|x64
+		{98508736-247B-41BB-9221-70C900431B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98508736-247B-41BB-9221-70C900431B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98508736-247B-41BB-9221-70C900431B19}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{98508736-247B-41BB-9221-70C900431B19}.Debug|Any CPU.Build.0 = Debug|x64
+		{98508736-247B-41BB-9221-70C900431B19}.Debug|x64.ActiveCfg = Debug|x64
+		{98508736-247B-41BB-9221-70C900431B19}.Debug|x64.Build.0 = Debug|x64
 		{1B48366A-328B-49CA-86D4-C01BBD609468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B48366A-328B-49CA-86D4-C01BBD609468}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B48366A-328B-49CA-86D4-C01BBD609468}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B48366A-328B-49CA-86D4-C01BBD609468}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B48366A-328B-49CA-86D4-C01BBD609468}.Debug|x64.ActiveCfg = Debug|x64
+		{1B48366A-328B-49CA-86D4-C01BBD609468}.Debug|x64.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9CCF3A8D-80D2-4CE7-AC3E-38536F6F0EBF}
 	EndGlobalSection
 EndGlobal
