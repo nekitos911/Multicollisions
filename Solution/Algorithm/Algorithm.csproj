@@ -36,25 +36,6 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <!--    <Reference Include="Alea, Version=3.0.0.0, Culture=neutral, PublicKeyToken=ba52afc3c2e933d6">-->
-    <!--      <HintPath>..\packages\Alea.3.0.4\lib\net45\Alea.dll</HintPath>-->
-    <!--      <Private>True</Private>-->
-    <!--      <SpecificVersion>True</SpecificVersion>-->
-    <!--    </Reference>-->
-    <!--    <Reference Include="Alea.IL, Version=3.0.0.0, Culture=neutral, PublicKeyToken=ba52afc3c2e933d6">-->
-    <!--      <HintPath>..\packages\Alea.3.0.4\lib\net45\Alea.IL.dll</HintPath>-->
-    <!--      <Private>True</Private>-->
-    <!--      <SpecificVersion>True</SpecificVersion>-->
-    <!--    </Reference>-->
-    <!--    <Reference Include="Alea.Parallel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=ba52afc3c2e933d6">-->
-    <!--      <HintPath>..\packages\Alea.3.0.4\lib\net45\Alea.Parallel.dll</HintPath>-->
-    <!--      <Private>True</Private>-->
-    <!--      <SpecificVersion>True</SpecificVersion>-->
-    <!--    </Reference>-->
-    <!--    <Reference Include="FSharp.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">-->
-    <!--      <HintPath>..\packages\FSharp.Core.5.0.0\lib\netstandard2.0\FSharp.Core.dll</HintPath>-->
-    <!--      <Private>True</Private>-->
-    <!--    </Reference>-->
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -64,13 +45,11 @@
     <Compile Include="MagicInput.cs" />
     <Compile Include="Multicollision.cs" />
     <Compile Include="Options.cs" />
-    <Compile Include="ParallelForDelegateTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
-    <Content Include="NewFile1.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -96,22 +75,3 @@
     </Target>
     -->
 </Project>
-<!--<Project Sdk="Microsoft.NET.Sdk">-->
-<!--    <PropertyGroup>-->
-<!--        <OutputType>Exe</OutputType>-->
-<!--        <TargetFramework>net472</TargetFramework>-->
-<!--    </PropertyGroup>-->
-<!--    <ItemGroup>-->
-<!--      <ProjectReference Include="..\MoraHash\MoraHash.csproj" />-->
-<!--    </ItemGroup>-->
-<!--    <ItemGroup>-->
-<!--      <PackageReference Include="Alea" Version="3.0.4" />-->
-<!--      <PackageReference Include="Alea.Fody" Version="3.0.4">-->
-<!--        <PrivateAssets>all</PrivateAssets>-->
-<!--        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
-<!--      </PackageReference>-->
-<!--      <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />-->
-<!--      <PackageReference Include="morelinq" Version="3.3.2" />-->
-<!--      <PackageReference Include="ServiceStack.Common" Version="5.10.2" />-->
-<!--    </ItemGroup>-->
-<!--</Project>-->

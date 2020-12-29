@@ -47,7 +47,7 @@ namespace MoraHash
                 tmp[i * 2 + 1] = splitted.low;
             }
             
-            var res = Enumerable.Range(0, tmp.Length).Select(i => Constants.SBox[tmp[i]]).ToArray();
+            var res = Enumerable.Range(0, tmp.Length).Select(i => (byte)Constants.SBox[tmp[i]]).ToArray();
             
             for (int i = 0; i < ret.Length; i++)
             {
@@ -63,7 +63,7 @@ namespace MoraHash
 //            Parallel.For(0, 4, i =>
             for (int i = 0; i < 4; i++)
             {
-                byte[] t = new byte[2];
+                int t = 0;
                 byte[] tempArray = new byte[2];
                 Array.Copy(state, i * 2, tempArray, 0, 2);
                 tempArray = tempArray.Reverse().ToArray();
@@ -76,15 +76,10 @@ namespace MoraHash
                 {
                     if (tempBits[j])
                     {
-                        var toXor = BitConverter.GetBytes(Constants.L[j]).Take(2).Reverse().ToArray();
-
-                        for (int k = 0; k < t.Length; k++)
-                        {
-                            t[k] ^= toXor[k];
-                        }
+                        t ^= Constants.L[j];
                     }
                 }
-                Array.Copy(t, 0, result, i * 2, 2);
+                Array.Copy(BitConverter.GetBytes(t).Reverse().ToArray(), 2, result, i * 2, 2);
             }
 
             return result;
@@ -97,13 +92,13 @@ namespace MoraHash
 
             byte[] n0 = new byte[BlockSize];
 
-            IEnumerable<IEnumerable<byte>> blocks = MoreEnumerable.Batch(message, BlockSize);
+            IEnumerable<IEnumerable<byte>> blocks = message.Batch(BlockSize).ToArray();
 
-            MoreEnumerable.ForEach(blocks.Where(block => block.Count() >= BlockSize), block =>
+            blocks.Where(block => block.Count() >= BlockSize).Reverse().ForEach(block =>
             {
-                h = G_n(_n, h, block); 
-                _n = _n.RingSum(BitConverter.GetBytes((long)64).Reverse());
-                _sigma = _sigma.RingSum(block);
+                h = G_n(_n, h, block);
+                _n = _n.AddModulo64(BitConverter.GetBytes((long)64).Reverse().ToArray());
+                _sigma = _sigma.AddModulo64(block.ToArray());
             });
 
             var lastBlockSize = blocks.Last().Count();
@@ -118,9 +113,9 @@ namespace MoraHash
            
             var msgLen = BitConverter.GetBytes((long)(message.Length * 8)).Reverse();
 
-            _n = _n.RingSum(msgLen);
+            _n = _n.AddModulo64(msgLen.ToArray());
 
-            _sigma = _sigma.RingSum(m);
+            _sigma = _sigma.AddModulo64(m);
 
             h = G_n(n0, h, _n);
             h = G_n(n0, h, _sigma);
@@ -136,19 +131,24 @@ namespace MoraHash
         public byte[] E(byte[] k, byte[] m)
         {
             byte[] state = k.Xor(m);
-            for (int i = 0; i < Constants.C.Length; i++)
+            for (int i = 0; i < Constants.C.Length - 1; i++)
             {
-                state = L(P(S(state))).Xor(KeySchedule(k, i));
+                k = KeySchedule(k, i);
+                state = L(P(S(state))).Xor(k);
             }
             return state;
         }
 
-        private byte[] KeySchedule(byte[] k, int i) => L(P(S(k.Xor(BitConverter.GetBytes(Constants.C[i])))));
+        private byte[] KeySchedule(byte[] k, int i) => L(P(S(k.Xor(BitConverter.GetBytes(Constants.C[i]).Reverse()))));
         
-        public string ComputeHash(byte[] message)
+        public byte[] ComputeHash(byte[] message)
         {
-            byte[] res = GetHash(message.ToArray());
-            return BitConverter.ToString(res.ToArray()).Replace("-", string.Empty);
+            return GetHash(message.ToArray());
+        }
+
+        public static string StringRepresentation(byte[] input)
+        {
+            return BitConverter.ToString(input.ToArray()).Replace("-", string.Empty);
         }
         
     }

@@ -4,11 +4,16 @@ namespace Algorithm
 {
     public class Options
     {
-        [Option('i', "input", Required = true, Default = "",
+        [Option('t', "t", Required = false, Default = 5,
             HelpText =
-                "Input data file path")]
-        public string InputFile { get; set; }
+                "Operations count (2^t messages)")]
+        public int T { get; set; }
         
+//        [Option('i', "input", Required = true, Default = "",
+//            HelpText =
+//                "Input data file path")]
+//        public string InputFile { get; set; }
+//        
         [Option('o', "output", Required = true, Default = "",
             HelpText =
                 "Output data file path")]
