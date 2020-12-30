@@ -17,8 +17,7 @@ namespace MoraHash.Tests
             var mora = new HashFunction();
             
             var result = mora.G_n(new byte[8], new byte[8], m);
-            var resultMultiCol = Multicollision.G_n(0, 0, BitConverter.ToUInt64(m.Reverse().ToArray(), 0), Constants.L,
-                Constants.SBox, Constants.Tau, Constants.C);
+            var resultMultiCol = MultiCollisions.G_n(0, 0, BitConverter.ToUInt64(m.Reverse().ToArray(), 0));
             
             Assert.True(expected.SequenceEqual(result));
             Assert.True(expected.SequenceEqual(BitConverter.GetBytes(resultMultiCol).Reverse()));

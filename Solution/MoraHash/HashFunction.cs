@@ -88,6 +88,8 @@ namespace MoraHash
         private byte[] GetHash(byte[] message)
         {
             var h = new byte[BlockSize];
+            _n = new byte[BlockSize];
+            _sigma = new byte[BlockSize];
             Array.Copy(_iv, h, BlockSize);
 
             byte[] n0 = new byte[BlockSize];

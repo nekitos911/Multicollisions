@@ -39,13 +39,14 @@ namespace Algorithm
 
 //            var resultHash = hash.ComputeHash(File.ReadAllBytes(result.Value.OutputFile));
 
-            var collisions = new Multicollision();
-            var messages = collisions.FindCollisions(result.Value.T);
+            var collisions = new MultiCollisions();
+            var (messages, h, n) = collisions.FindCollisions(10);
 
             using (var sw = File.CreateText(result.Value.OutputFile))
             {
-                sw.WriteLine($"h = {BitConverter.ToString(BitConverter.GetBytes(messages.Item2).Reverse().ToArray()).Replace("-", string.Empty)}");
-                messages.Item1.Select(msg => msg.SelectMany(m => BitConverter.GetBytes(m).Reverse())).ForEach(msg =>
+                sw.WriteLine($"h = {HashFunction.StringRepresentation(BitConverter.GetBytes(h).Reverse().ToArray())}");
+                sw.WriteLine($"n = {HashFunction.StringRepresentation(BitConverter.GetBytes(n).Reverse().ToArray())}");
+                messages.ForEach(msg =>
                 {
                     sw.WriteLine(HashFunction.StringRepresentation(msg.ToArray()));
                 });  
