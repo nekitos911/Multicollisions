@@ -10,6 +10,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="FodyWeavers.xml" t="Include" />
         <e p="MagicInput.cs" t="Include" />
+        <e p="MeaningfulCollisions.cs" t="Include" />
         <e p="MultiCollisions.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="Options.cs" t="Include" />

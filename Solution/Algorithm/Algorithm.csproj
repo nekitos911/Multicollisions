@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MagicInput.cs" />
+    <Compile Include="MeaningfulCollisions.cs" />
     <Compile Include="MultiCollisions.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
