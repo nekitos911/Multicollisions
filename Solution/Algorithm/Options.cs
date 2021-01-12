@@ -4,7 +4,7 @@ namespace Algorithm
 {
     public class Options
     {
-        [Option('t', "t", Required = false, Default = 5,
+        [Option('t', Required = false, Default = 5,
             HelpText =
                 "Operations count (2^t messages)")]
         public int T { get; set; }

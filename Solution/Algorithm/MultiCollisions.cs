@@ -83,6 +83,12 @@ namespace Algorithm
             var n1 = N + 64UL;
             return G_nGPU(n1, G_nGPU(N, h, m), ulong.MaxValue - m + 1);
         }
+        
+        public static ulong Function(ulong N, ulong h, ulong m)
+        {
+            var n1 = N + 64UL;
+            return G_n(n1, G_n(N, h, m), ulong.MaxValue - m + 1);
+        }
 
         private (ulong, ulong) MagicPoints(ulong n, ulong h)
         {
@@ -110,14 +116,10 @@ namespace Algorithm
                         var x0 = res.X0;
                         var count = res.Counter;
 
-                        if (!dict.ContainsKey(x))
+                        if (dict.TryGetValue(x, out var value))
                         {
-                            dict[x] = (x0, count);
-                        }
-                        else
-                        {
-                            var x1 = dict[x].Item1;
-                            var count1 = dict[x].Item2;
+                            var x1 = value.Item1;
+                            var count1 = value.Item2;
                         
                             while (count1 > count)
                             {
@@ -148,6 +150,10 @@ namespace Algorithm
                                 retVal.Item2 = x0;
                                 state.Break();
                             }
+                        }
+                        else
+                        {
+                            dict.TryAdd(x, (x0, count));
                         }
                     });
 

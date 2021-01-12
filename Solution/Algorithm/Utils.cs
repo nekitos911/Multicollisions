@@ -122,16 +122,10 @@ namespace Algorithm
         {
             return L(P(S(k ^ c)));
         }
-        
+
         public static ulong G_n(ulong N, ulong h, ulong m)
         {
             return E(L(P(S(h ^ N))), m) ^ h ^ m;
-        }
-
-        public static ulong Function(ulong N, ulong h, ulong m)
-        {
-            var n1 = N + 64UL;
-            return G_n(n1, G_n(N, h, m), ulong.MaxValue - m + 1);
         }
 
         #endregion

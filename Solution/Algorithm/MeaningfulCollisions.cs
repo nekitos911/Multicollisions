@@ -8,7 +8,6 @@ using Alea;
 using Alea.Parallel;
 using MoraHash;
 using MoreLinq;
-using MoreLinq.Extensions;
 using static Algorithm.Utils;
 
 namespace Algorithm
@@ -105,7 +104,7 @@ namespace Algorithm
             var dict2 = new ConcurrentDictionary<ulong, (ulong, long)>();
             
             var maxSize = 1_050_000;
-            var step = 100;
+            var step = stepCount;
 
             while (true)
             {
@@ -117,7 +116,7 @@ namespace Algorithm
                     st.Start();
 //                    var result = MagicCycle(input.Skip(i).Take(step).ToArray(), maxSize, n, h1, h2);
 
-                    var result = MagicCycle(input.Skip(i).Take(step).ToArray(), maxSize, n, h1, h2);
+                    var result = MagicCycleGPU(input.Skip(i).Take(step).ToArray(), maxSize, n, h1, h2);
 //                    result = AppendExtension.Append(result, new MagicInput()  {X = result[0].X1}).ToArray();
 //                    var result = MagicCycle(new MagicInput[] {new MagicInput() {X0 = 4130961177024394}}, maxSize, n, h1, h2);
                     st.Stop();
@@ -134,8 +133,8 @@ namespace Algorithm
                         var count = res.Counter;
                         var count1 = res.Counter1;
 
-                        dict1[x] = (x0, count);
-                        dict2[x1] = (x0, count1);
+                        dict1.TryAdd(x, (x0, count));
+                        dict2.TryAdd(x1, (x0, count1));
                     });
                     
                     var same = from k1 in dict1.Keys
@@ -184,72 +183,8 @@ namespace Algorithm
                         {
                             retVal.Item1 = x1;
                             retVal.Item2 = x0;
-//                            state.Break();
                         }
                     }
-                    
-//                    Parallel.ForEach(result, (res, state) =>
-//                    {
-//                        var x = res.X;
-//                        var x1 = res.X1;
-//                        var x0 = res.X0;
-//                        var count = res.Counter;
-//                        var count1 = res.Counter1;
-//
-//                        dict1[x] = (x0, count);
-//                        dict2[x1] = (x0, count1);
-//
-//                        var same = from k1 in dict1.Keys
-//                            join k2 in dict2.Keys
-//                                on k1
-//                                equals k2
-//                            select new
-//                            {
-//                                k = k1
-//                            };
-//
-//
-//                        if (same.Any())
-//                        {
-//                            x = same.First().k;
-//                            x0 = dict1[x].Item1;
-//                            x1 = dict2[x].Item1;
-//                            count = dict1[x].Item2;
-//                            count1 = dict2[x].Item2;
-//
-//                            Console.WriteLine($"x0: {x0}, x: {x}, x1: {x1} count: {count}, count1: {count1}");
-//
-//                            while (count1 > count)
-//                            {
-//                                x1 = G_n(n, h2, x1);
-//                                count1--;
-//                            }
-//
-//                            while (count > count1)
-//                            {
-//                                x0 = G_n(n, h1, x0);
-//                                count--;
-//                            }
-//
-//                            while (true)
-//                            {
-//                                var next = G_n(n, h2, x1);
-//                                var next2 = G_n(n, h1, x0);
-//
-//                                if (next == next2) break;
-//
-//                                x1 = next;
-//                                x0 = next2;
-//                            }
-//
-//                            if (x1 != 0 && x0 != 0)
-//                            {
-//                                retVal.Item1 = x1;
-//                                retVal.Item2 = x0;
-//                                state.Break();
-//                            }
-//                        }
-//                    });
                     st.Stop();
                     time = st.ElapsedMilliseconds;
 
@@ -258,70 +193,6 @@ namespace Algorithm
                 }
                 if (retVal != (0, 0)) break;
             }
-
-//
-//                    Parallel.ForEach(result, (res) =>
-//                    {
-//                        var x = res.X;
-//                        var x0 = res.X0;
-//                        var count = res.Counter;
-//                        dict1[x] = (x0, count);
-//                    });
-//                    
-//                    Parallel.ForEach(result2.Result, (res) =>
-//                    {
-//                        var x = res.X;
-//                        var x0 = res.X0;
-//                        var count = res.Counter;
-//                        dict2[x] = (x0, count);
-//                    });
-//
-//                    var same = dict1.Where(k => dict2.ContainsKey(k.Key));
-//
-//                    if (same.Any())
-//                    {
-//                        var key = same.First().Key;
-//                        var x0 = dict1[key].Item1;
-//                        var count = dict1[key].Item2;
-//                        
-//                        var x1 = dict2[key].Item1;
-//                        var count1 = dict2[key].Item2;
-//                        
-//                        while (count1 > count)
-//                        {
-//                            x1 = G_n(n, h2, x1);
-//                            count1--;
-//                        }
-//
-//                        while (count > count1)
-//                        {
-//                            x0 = G_n(n, h1, x0);
-//                            count--;
-//                        }
-//
-//                        while (true)
-//                        {
-//                            var next = G_n(n, h2, x1);
-//                            var next2 = G_n(n, h1, x0);
-//
-//                            if (next == next2) break;
-//
-//                            x1 = next;
-//                            x0 = next2;
-//                        }
-//
-//                        if (x1 != 0 && x0 != 0)
-//                        {
-//                            retVal.Item1 = x1;
-//                            retVal.Item2 = x0;
-//                        }
-//                    }
-//
-//                    if (retVal != (0, 0)) break;
-//                }
-//                if (retVal != (0, 0)) break;
-//            }
-//            
             return retVal;
         }
         
