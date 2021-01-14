@@ -22,9 +22,9 @@
       </e>
       <e p="Algorithm.Tests" t="IncludeRecursive">
         <e p="Algorithm.Tests.csproj" t="IncludeRecursive" />
+        <e p="App.config" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive" />
-        <e p="packages.config" t="Include" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
@@ -42,10 +42,10 @@
         </e>
       </e>
       <e p="MoraHash.Tests" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="MoraHash.Tests.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive" />
-        <e p="packages.config" t="Include" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
         </e>

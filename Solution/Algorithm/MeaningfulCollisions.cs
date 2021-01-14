@@ -15,27 +15,27 @@ namespace Algorithm
     public class MeaningfulCollisions
     {
         [GpuManaged]
-        private MagicInput[] MagicCycleGPU(MagicInput[] input, int maxSize, ulong n, ulong h, ulong h1)
+        private MagicInput[] MagicCycleGPU(MagicInput[] input, int maxSize, ulong n, ulong h, ulong h1, ulong s1, ulong s2)
         {
             var t = (int)Math.Log(maxSize, 2);
             var result = new MagicInput[input.Length];
              
             Gpu.Default.For(0, result.Length, i =>
             {
-                result[i] = GetMagicGPU(input[i], n, h, h1, t);
+                result[i] = GetMagicGPU(input[i], n, h, h1, s1, s2, t);
             });
             
             return result;
         }
         
-        private MagicInput[] MagicCycle(MagicInput[] input, int maxSize, ulong n, ulong h, ulong h1)
+        private MagicInput[] MagicCycle(MagicInput[] input, int maxSize, ulong n, ulong h, ulong h1, ulong s1, ulong s2)
         {
             var t = (int)Math.Log(maxSize, 2);
             var result = new MagicInput[input.Length];
              
             Parallel.For(0, result.Length, i =>
             {
-                result[i] = GetMagic(input[i], n, h, h1, t);
+                result[i] = GetMagic(input[i], n, h, h1, s1, s2, t);
             });
             
             return result;
@@ -43,61 +43,73 @@ namespace Algorithm
 
         private async Task<MagicInput[]> AsyncMagicCycleGPU(MagicInput[] input, int maxSize, ulong n, ulong h, ulong h1)
         {
-            return await Task.Run(() => MagicCycleGPU(input, maxSize, n, h, h1));
+            return await Task.Run(() => MagicCycleGPU(input, maxSize, n, h, h1, 0, 0));
         }
 
         private async Task<MagicInput[]> AsyncMagicCycle(MagicInput[] input, int maxSize, ulong n, ulong h, ulong h1)
         {
-            return await Task.Run(() => MagicCycle(input, maxSize, n, h, h1));
+            return await Task.Run(() => MagicCycle(input, maxSize, n, h, h1, 0, 0));
         }
         
-        private MagicInput GetMagicGPU(MagicInput input, ulong n, ulong h, ulong h1, int size)
+        private MagicInput GetMagicGPU(MagicInput input, ulong n, ulong h1, ulong h2, ulong s1, ulong s2, int size)
         {
             var x0 = input.X0;
-            var x = G_nGPU(n, h, x0);
-            var x1 = G_nGPU(n, h1, x0);
+            var x = FunctionGPU(n, h1, x0, s1);
+            var x1 = FunctionGPU(n, h2, x0, s2);
             var counter = 0;
             var counter1 = 0;
             //if first 32 - size bits are zero, x - magic num
             while (x >> (32 + size) != 0)
             {
-                x = G_nGPU(n, h, x);
+                x = FunctionGPU(n, h1, x, s1);
                 counter++;
             }
             
             while (x1 >> (32 + size) != 0)
             {
-                x1 = G_nGPU(n, h1, x1);
+                x1 = FunctionGPU(n, h2, x1, s2);
                 counter1++;
             }
 
             return new MagicInput() {X = x, X1 = x1, X0 = x0, Counter = counter, Counter1 = counter1};
         }
         
-        private MagicInput GetMagic(MagicInput input, ulong n, ulong h, ulong h1, int size)
+        private static ulong FunctionGPU(ulong N, ulong h, ulong m, ulong s)
+        {
+            var n1 = N + 64UL;
+            return G_nGPU(n1, G_nGPU(N, h, m), (ulong.MaxValue - m + 1) + (ulong.MaxValue - s + 1));
+        }
+        
+        private static ulong Function(ulong N, ulong h, ulong m, ulong s)
+        {
+            var n1 = N + 64UL;
+            return G_n(n1, G_n(N, h, m), (ulong.MaxValue - m + 1) + (ulong.MaxValue - s + 1));
+        }
+        
+        private MagicInput GetMagic(MagicInput input, ulong n, ulong h1, ulong h2, ulong s1, ulong s2, int size)
         {
             var x0 = input.X0;
-            var x = G_n(n, h, x0);
-            var x1 = G_n(n, h1, x0);
+            var x = Function(n, h1, x0, s1);
+            var x1 = Function(n, h2, x0, s2);
             var counter = 0;
             var counter1 = 0;
             //if first 32 - size bits are zero, x - magic num
             while (x >> (32 + size) != 0)
             {
-                x = G_n(n, h, x);
+                x = Function(n, h1, x, s1);
                 counter++;
             }
             
             while (x1 >> (32 + size) != 0)
             {
-                x1 = G_n(n, h1, x1);
+                x1 = Function(n, h2, x1, s2);
                 counter1++;
             }
 
             return new MagicInput() {X = x, X1 = x1, X0 = x0, Counter = counter, Counter1 = counter1};
         }
         
-        private (ulong, ulong) MagicPoints(ulong n, ulong h1, ulong h2, int stepCount = 50_000)
+        private (ulong, ulong) MagicPoints(ulong n, ulong h1, ulong h2, ulong s1, ulong s2, int stepCount = 50_000)
         {
             (ulong, ulong) retVal = (0, 0);
             var dict1 = new ConcurrentDictionary<ulong, (ulong, long)>();
@@ -116,7 +128,8 @@ namespace Algorithm
                     st.Start();
 //                    var result = MagicCycle(input.Skip(i).Take(step).ToArray(), maxSize, n, h1, h2);
 
-                    var result = MagicCycleGPU(input.Skip(i).Take(step).ToArray(), maxSize, n, h1, h2);
+//                    var result = MagicCycleGPU(input.Skip(i).Take(step).ToArray(), maxSize, n, h1, h2, s1, s2);
+                    var result = MagicCycleGPU(input.Skip(i).Take(step).ToArray(), maxSize, n, h1, h2, s1, s2);
 //                    result = AppendExtension.Append(result, new MagicInput()  {X = result[0].X1}).ToArray();
 //                    var result = MagicCycle(new MagicInput[] {new MagicInput() {X0 = 4130961177024394}}, maxSize, n, h1, h2);
                     st.Stop();
@@ -158,20 +171,20 @@ namespace Algorithm
 
                         while (count1 > count)
                         {
-                            x1 = G_n(n, h2, x1);
+                            x1 = Function(n, h1, x1, s2);
                             count1--;
                         }
 
                         while (count > count1)
                         {
-                            x0 = G_n(n, h1, x0);
+                            x0 = Function(n, h1, x0, s1);
                             count--;
                         }
 
                         while (true)
                         {
-                            var next = G_n(n, h2, x1);
-                            var next2 = G_n(n, h1, x0);
+                            var next = Function(n, h1, x1, s2);
+                            var next2 = Function(n, h1, x0, s1);
 
                             if (next == next2) break;
 
@@ -206,6 +219,11 @@ namespace Algorithm
             gpu.Copy(Constants.SBox, ConstSbox);
             gpu.Copy(Constants.Tau, ConstTau);
             
+            
+//            var h1 = ulong.MaxValue - A + 1 + ulong.MaxValue - s1 + 1;
+//            var h2 = ulong.MaxValue - B + 1 + ulong.MaxValue - s2 + 1;
+            
+
             var h1 = 0UL;
             var h2 = 0UL;
             var n = 0UL;
@@ -213,6 +231,10 @@ namespace Algorithm
             
             IEnumerable<IEnumerable<byte>> blocks = MoreEnumerable.Batch(pad.Concat(p1), 8).ToArray();
             IEnumerable<IEnumerable<byte>> blocks2 = MoreEnumerable.Batch(pad.Concat(p2), 8).ToArray();
+            
+            var s1 = BitConverter.ToUInt64(blocks.Aggregate((x, y) => x.Xor(y)).ToArray(), 0);
+            var s2 = BitConverter.ToUInt64(blocks2.Aggregate((x, y) => x.Xor(y)).ToArray(), 0);
+
 
             MoreEnumerable.ForEach(blocks.Zip(blocks2, (k, v) => (k, v)).Where(block => block.v.Count() >= 8).Reverse(), block =>
             {
@@ -224,7 +246,7 @@ namespace Algorithm
 
             for (int i = 0; i < 10; i++)
             {
-                var r = MagicPoints(n, h1, h2, stepCount);
+                var r = MagicPoints(n, h1, h2, s1, s2, stepCount);
                 Console.WriteLine($"N: {n}; h1: {h1}; h2: {h2}");
                 Console.WriteLine($"{r.Item1} : {r.Item2}");
                 h1 = G_n(n, h1, r.Item1);

@@ -60,9 +60,8 @@
     <PackageReference Include="Alea" Version="3.0.4" />
     <PackageReference Include="Alea.Fody" Version="3.0.4" />
     <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
-    <PackageReference Include="FSharp.Core" Version="5.0.0" />
+    <PackageReference Include="FSharp.Core" Version="4.4.0.0" />
     <PackageReference Include="morelinq" Version="3.3.2" />
-    <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="ServiceStack.Common" Version="5.10.2" />
   </ItemGroup>
   <ItemGroup>

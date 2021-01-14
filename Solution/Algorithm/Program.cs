@@ -13,7 +13,7 @@ namespace Algorithm
     {
         static void Main(string[] args)
         {
-//            var step = args.Length > 0 ? int.Parse(args[0]) : 50_000;
+//            var step = args.Length > 0 ? int.Parse(args[0]) : 150_000;
 //            new MeaningfulCollisions().MeaningfulCollision(Encoding.UTF8.GetBytes("qwertyui"), Encoding.UTF8.GetBytes("qwertyup"), step);
             var result = Parser.Default.ParseArguments<Options>(args);
             
